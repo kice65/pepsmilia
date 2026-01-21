@@ -1,34 +1,53 @@
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+"use client";
+
 import { useEffect, useState } from "react";
+import { db } from "../utils/firebase";
+import { collection, getDocs } from "firebase/firestore";
+
+interface Booking {
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+  createdAt: any;
+  paid: boolean;
+}
 
 export default function AdminDashboard() {
-  const [bookings, setBookings] = useState([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(collection(db, "bookings"));
-      setBookings(querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })));
+    const fetchBookings = async () => {
+      const snapshot = await getDocs(collection(db, "bookings"));
+      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Booking[];
+      setBookings(data);
     };
-    fetchData();
+    fetchBookings();
   }, []);
 
   return (
-    <div className="p-10 text-white">
-      <h2 className="text-3xl font-bold mb-6">Admin Dashboard</h2>
-
-      <div className="grid gap-4">
-        {bookings.map(b => (
-          <div key={b.id} className="bg-white/10 p-4 rounded-xl">
-            <p><strong>Name:</strong> {b.name}</p>
-            <p><strong>Email:</strong> {b.email}</p>
-            <p><strong>Message:</strong> {b.message}</p>
-          </div>
-        ))}
-      </div>
+    <div className="max-w-4xl mx-auto p-8">
+      <h2 className="text-2xl font-bold mb-4">Bookings</h2>
+      <table className="w-full border">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="p-2 border">Name</th>
+            <th className="p-2 border">Email</th>
+            <th className="p-2 border">Message</th>
+            <th className="p-2 border">Paid</th>
+          </tr>
+        </thead>
+        <tbody>
+          {bookings.map(b => (
+            <tr key={b.id}>
+              <td className="p-2 border">{b.name}</td>
+              <td className="p-2 border">{b.email}</td>
+              <td className="p-2 border">{b.message}</td>
+              <td className="p-2 border">{b.paid ? "Yes" : "No"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
