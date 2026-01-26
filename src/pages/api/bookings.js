@@ -1,5 +1,6 @@
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../src/firebase";
+import { db } from "../../firebase";
+
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
