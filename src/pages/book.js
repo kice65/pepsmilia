@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { db } from "../../firebase";
+
 
 export default function BookingForm() {
   const [formData, setFormData] = useState({

@@ -1,6 +1,6 @@
 import { getSession, signOut } from "next-auth/react";
 import { collection, query, orderBy, getDocs } from "firebase/firestore";
-import { db } from "../../src/firebase";
+import { db } from "../../firebase";
 
 export default function Dashboard({ bookings, session }) {
   return (
