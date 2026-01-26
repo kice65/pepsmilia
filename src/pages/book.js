@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { db } from "../firebase";
-
 
 export default function BookingForm() {
   const [formData, setFormData] = useState({
@@ -45,6 +43,8 @@ export default function BookingForm() {
         className="bg-white p-8 rounded shadow-md w-full max-w-md"
       >
         <h2 className="text-2xl font-bold mb-4 text-center">Book a Service</h2>
+
+        <input type="hidden" name="csrfToken" value="" />
 
         <div className="mb-4">
           <label className="block mb-1">Name</label>

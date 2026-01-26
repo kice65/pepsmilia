@@ -50,10 +50,8 @@ export async function getServerSideProps(context) {
   const bookings = querySnapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
-    date: doc.data().date || "", // fallback if date missing
+    date: doc.data().date || "",
   }));
 
-  return {
-    props: { session, bookings },
-  };
+  return { props: { session, bookings } };
 }
