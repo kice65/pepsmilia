@@ -4,7 +4,7 @@ import { useState } from "react";
 import { db } from "../utils/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import emailjs from "@emailjs/browser";
-import { stripePromise } from "../utils/stripe";
+import { getStripe } from "../utils/stripe"; // fixed import
 
 interface FormState {
   name: string;
@@ -25,23 +25,32 @@ export default function BookingForm() {
     setStatus("loading");
 
     try {
-      // Save to Firestore
-      await addDoc(collection(db, "bookings"), { ...form, createdAt: serverTimestamp(), paid: false });
+      // 1️⃣ Save booking to Firestore
+      await addDoc(collection(db, "bookings"), {
+        ...form,
+        createdAt: serverTimestamp(),
+        paid: false,
+      });
 
-      // Send EmailJS
+      // 2️⃣ Send EmailJS
+      if (
+        !process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ||
+        !process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ||
+        !process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      ) {
+        throw new Error("EmailJS environment variables not set!");
+      }
+
       await emailjs.send(
-        process.env.EMAILJS_SERVICE_ID!,
-        process.env.EMAILJS_TEMPLATE_ID!,
-        form as unknown as Record<string, unknown>,
-        process.env.EMAILJS_PUBLIC_KEY!
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        { ...form } as Record<string, unknown>,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
-      // Stripe Checkout
-      const stripe = await stripePromise;
-      if (!stripe) {
-        setStatus("error");
-        return;
-      }
+      // 3️⃣ Stripe Checkout
+      const stripe = await getStripe(); // use getStripe() util
+      if (!stripe) throw new Error("Stripe failed to initialize");
 
       const res = await fetch("/api/create-checkout-session", {
         method: "POST",
@@ -50,8 +59,10 @@ export default function BookingForm() {
       });
 
       const data = await res.json();
-      const checkoutResult = await (stripe as any).redirectToCheckout({ sessionId: data.id });
-      if (checkoutResult?.error) throw checkoutResult.error;
+
+      // ✅ TS fix: cast stripe to any for redirectToCheckout
+      const result = await (stripe as any).redirectToCheckout({ sessionId: data.id });
+      if (result?.error) throw result.error;
 
       setStatus("success");
     } catch (err) {
@@ -94,8 +105,14 @@ export default function BookingForm() {
       <button type="submit" className="bg-blue-600 text-white p-3 rounded">
         {status === "loading" ? "Processing..." : "Book & Pay"}
       </button>
-      {status === "error" && <p className="text-red-500 mt-2">Error, please try again.</p>}
-      {status === "success" && <p className="text-green-500 mt-2">Booking saved! Redirecting to payment...</p>}
+      {status === "error" && (
+        <p className="text-red-500 mt-2">Error, please try again.</p>
+      )}
+      {status === "success" && (
+        <p className="text-green-500 mt-2">
+          Booking saved! Redirecting to payment...
+        </p>
+      )}
     </form>
   );
 }

@@ -106,7 +106,7 @@ type ApiRouteConfig = {
 // Validate ../../src/pages/api/create-checkout-sessions.ts
 {
   type __IsExpected<Specific extends ApiRouteConfig> = Specific
-  const handler = {} as typeof import("../../src/pages/api/create-checkout-sessions.js")
+  const handler = {} as typeof import("../../src/pages/api/checkout-sessions.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check
