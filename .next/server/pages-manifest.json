@@ -1,0 +1,17 @@
+{
+  "/": "pages/index.html",
+  "/Canada": "pages/Canada.html",
+  "/Home": "pages/Home.html",
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/_error": "pages/_error.js",
+  "/admin": "pages/admin.html",
+  "/api/check-eligibility": "pages/api/check-eligibility.js",
+  "/api/create-checkout-sessions": "pages/api/create-checkout-sessions.js",
+  "/blogs": "pages/blogs.html",
+  "/booking": "pages/booking.html",
+  "/client": "pages/client.html",
+  "/client/blogs": "pages/client/blogs.html",
+  "/eligibility": "pages/eligibility.html",
+  "/404": "pages/404.html"
+}

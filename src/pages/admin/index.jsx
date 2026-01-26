@@ -1,5 +1,5 @@
-import BookingForm from "../components/BookingForm";
-import Testimonials from "../components/Testimonials";
+import BookingForm from "../../components/BookingForm";
+import Testimonials from "../../components/Testimonials";
 import { motion } from "framer-motion";
 
 export default function Home() {

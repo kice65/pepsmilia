@@ -1,0 +1,110 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "pages",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
+      "page": "/api/check-eligibility",
+      "regex": "^/api/check\\-eligibility(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/check\\-eligibility(?:/)?$"
+    },
+    {
+      "page": "/api/create-checkout-sessions",
+      "regex": "^/api/create\\-checkout\\-sessions(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/create\\-checkout\\-sessions(?:/)?$"
+    },
+    {
+      "page": "/blogs",
+      "regex": "^/blogs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/blogs(?:/)?$"
+    },
+    {
+      "page": "/booking",
+      "regex": "^/booking(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/booking(?:/)?$"
+    },
+    {
+      "page": "/Canada",
+      "regex": "^/Canada(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/Canada(?:/)?$"
+    },
+    {
+      "page": "/client",
+      "regex": "^/client(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client(?:/)?$"
+    },
+    {
+      "page": "/client/blogs",
+      "regex": "^/client/blogs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/client/blogs(?:/)?$"
+    },
+    {
+      "page": "/eligibility",
+      "regex": "^/eligibility(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/eligibility(?:/)?$"
+    },
+    {
+      "page": "/Home",
+      "regex": "^/Home(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/Home(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

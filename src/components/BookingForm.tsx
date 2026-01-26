@@ -32,7 +32,7 @@ export default function BookingForm() {
       await emailjs.send(
         process.env.EMAILJS_SERVICE_ID!,
         process.env.EMAILJS_TEMPLATE_ID!,
-        form as Record<string, unknown>,
+        form as unknown as Record<string, unknown>,
         process.env.EMAILJS_PUBLIC_KEY!
       );
 
@@ -50,7 +50,7 @@ export default function BookingForm() {
       });
 
       const data = await res.json();
-      const checkoutResult = await stripe.redirectToCheckout({ sessionId: data.id });
+      const checkoutResult = await (stripe as any).redirectToCheckout({ sessionId: data.id });
       if (checkoutResult?.error) throw checkoutResult.error;
 
       setStatus("success");
